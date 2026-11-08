@@ -23,6 +23,14 @@ function Todos() {
       )
     )
   }
+
+  function handleAllToggle(){
+    const allCompleted = todos.every(todo => todo.completed)
+    setTodos(
+        todos.map(todo => ({...todo, completed: !allCompleted}))
+    )
+  }
+
   function handleDelete(id) {
     setTodos(todos.filter((todo) => todo.id !== id))
   }
@@ -53,7 +61,7 @@ function Todos() {
                     htmlFor="toggle-all"
                     className="absolute -top-[66px] left-0 flex h-[65px] w-[60px] cursor-pointer items-center justify-center text-[22px] text-[#949494] peer-checked:text-[#484848]"
                 >
-                    <span className="rotate-90">❯</span>
+                    <span className="rotate-90" onClick={ () => handleAllToggle()}>❯</span>
                 </label>
 
                 <ul>
