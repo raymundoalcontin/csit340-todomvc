@@ -13,7 +13,6 @@ function Todos() {
     }
     const newTodo = { id: crypto.randomUUID(), text: trimmed, completed: false }
     setTodos([...todos, newTodo])
-    setTodosCounter(todosCounter+1)
     setText('')
   }
  
@@ -26,7 +25,9 @@ function Todos() {
   }
   function handleDelete(id) {
     setTodos(todos.filter((todo) => todo.id !== id))
-    setTodosCounter(todosCounter-1)
+  }
+  function handleClear(){
+    setTodos(todos.filter( (todo) => !todo.completed))
   }
 
   return (
@@ -121,7 +122,7 @@ function Todos() {
             </li>
         </ul>
 
-            <button type="button" className="cursor-pointer justify-self-end hover:underline">
+            <button type="button" className="cursor-pointer justify-self-end hover:underline" onClick={()=>handleClear()}>
                 Clear completed
             </button>
 
