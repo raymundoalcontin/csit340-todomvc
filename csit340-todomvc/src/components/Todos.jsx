@@ -4,6 +4,8 @@ function Todos() {
     const [text, setText] = useState('')
     const [todos, setTodos] = useState([])
     const todosCounter = todos.filter(todo => !todo.completed).length
+    const [filter, setFilter] = useState('all')
+
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -37,6 +39,15 @@ function Todos() {
   function handleClear(){
     setTodos(todos.filter( (todo) => !todo.completed))
   }
+  function showAll(){
+    setFilter('all')
+  }
+  function showActive(){
+    setFilter('active')
+  }
+  function showCompleted(){
+    setFilter('completed')
+  }
 
   return (
     <section className="mx-auto max-w-[550px]">
@@ -65,7 +76,11 @@ function Todos() {
                 </label>
 
                 <ul>
-                    {todos.map((todo) => (
+                {todos.filter(todo =>
+                        filter === 'all' ||
+                        (filter === 'active' && !todo.completed) ||
+                        (filter === 'completed' && todo.completed)
+                    ).map(todo => (
                         <li
                             key={todo.id}
                             className="group relative flex items-center border-b border-[#ededed] text-2xl"
@@ -108,6 +123,7 @@ function Todos() {
                 <button
                 type="button"
                 className="cursor-pointer rounded-[3px] border border-[#b83f45]/20 px-[7px] py-[3px]"
+                onClick = {() => showAll()}
                 >
                 All
                 </button>
@@ -116,6 +132,8 @@ function Todos() {
                 <button
                 type="button"
                 className="cursor-pointer rounded-[3px] border border-transparent px-[7px] py-[3px] hover:border-[#b83f45]/10"
+
+                onClick = {() => showActive()}
                 >
                 Active
                 </button>
@@ -124,6 +142,8 @@ function Todos() {
                 <button
                 type="button"
                 className="cursor-pointer rounded-[3px] border border-transparent px-[7px] py-[3px] hover:border-[#b83f45]/10"
+
+                onClick = {() => showCompleted()}
                 >
                 Completed
                 </button>
